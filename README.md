@@ -2,7 +2,7 @@
   
 ![middle](https://capsule-render.vercel.app/api?type=cylinder&color=0147FF&height=150&section=header&text=Wassup&fontColor=FFFFFF&fontSize=70&animation=fadeIn&fontAlignY=55)
 
-**[가제]누리호3호** <br>
+**[가제]WR(Water_Rocket)** <br>
 김도연 : Team Leader 97 회로전공 ENTJ 
 김선들 : Git Branch management 96 컴퓨터전공 INTJ , 
 김정현 : 01 소프트웨어전공 ISFJ
