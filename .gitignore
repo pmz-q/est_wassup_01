@@ -1,7 +1,6 @@
 # Custom added
 *.csv
 *.csv.gz
-*.txt
 *.zip
 *.pth
 *DS_Store
