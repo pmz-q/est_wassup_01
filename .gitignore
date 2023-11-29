@@ -4,6 +4,9 @@
 *.zip
 *.pth
 *DS_Store
+histories/*
+test/*
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
