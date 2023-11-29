@@ -6,6 +6,8 @@
 *DS_Store
 histories/*
 test/*
+*.gpkg
+*.gpkg-*
 
 
 # Byte-compiled / optimized / DLL files
