@@ -1,4 +1,5 @@
 <div align="center">
+[12조(WR)_계획.pdf](https://github.com/pmz-q/est_wassup_01/files/13511103/12.WR._.pdf)
   
 ![middle](https://capsule-render.vercel.app/api?type=cylinder&color=0147FF&height=150&section=header&text=Wassup&fontColor=FFFFFF&fontSize=70&animation=fadeIn&fontAlignY=55)
 
