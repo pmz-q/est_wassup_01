@@ -3,6 +3,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler
 
 DROP_X_COLS = []
 
+# USE_X_COLS = ['사고일시', '사고유형']
 USE_X_COLS = ['사고일시', '요일', '기상상태', '시군구', '도로형태', '노면상태', '사고유형']
 # USE_X_COLS = ['사고일시', '요일', '기상상태', '도로형태', '노면상태', '사고유형']
 

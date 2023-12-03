@@ -23,6 +23,7 @@ class Evaluate:
       for X, y in data_loader:
         X, y = X.to(device), y.to(device)
         output = model(X)
+        # print(output[0], y[0])
         metric.update(output, y)
   
   @classmethod

@@ -34,20 +34,24 @@ class HomeData(Dataset):
     df_num.fillna(fill_values, inplace=True)
     
     if self.x_scaler is not None:
-      df_num = self._scale_X(df_num)
+      df_num = pd.DataFrame(self._scale_X(df_num))
     
     # Custom X preprocess for cat data
     X_df = custom_X_preprocess_cat(X_df)
     
+    # cat encoded to num
+    df_cat_num = X_df.select_dtypes(include=['number'])
+    
     # Categorical
     df_cat = X_df.select_dtypes(include=['object'])
-    print(df_cat)
+    
+    # print(df_cat)
     enc = OneHotEncoder(dtype=np.float32, sparse_output=False, drop='if_binary', handle_unknown='ignore')
-    df_cat_onehot = enc.fit_transform(df_cat)
+    df_cat_onehot = pd.DataFrame(enc.fit_transform(df_cat))
     
-    df_arr = np.concatenate([df_num, df_cat_onehot], axis=1)
+    df_arr = pd.concat([df_num.reset_index(drop=True), df_cat_num.reset_index(drop=True), df_cat_onehot.reset_index(drop=True)], axis=1).set_index(X_df.index)
     
-    return pd.DataFrame(df_arr, index=X_df.index)
+    return df_arr
   
   def preprocess(self):
     trn_df, target, tst_df = self._get_dataset()

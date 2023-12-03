@@ -21,6 +21,8 @@ class KFoldCV:
     metrics = {'trn_rmsle': [], 'val_rmsle': [], 'trn_history': [], 'val_history': []}
     X = self.e_m.get_X()
     y = self.e_m.get_y()
+    print(X.shape)
+    print(y.shape)
     for i, (trn_idx, val_idx) in enumerate(kfold.split(X)):
       self.e_m.init_model()
       X_trn, y_trn = X[trn_idx], y[trn_idx]
@@ -29,7 +31,7 @@ class KFoldCV:
       ds_trn = TensorDataset(X_trn, y_trn)
       ds_val = TensorDataset(X_val, y_val)
 
-      dl_trn = DataLoader(ds_trn, **self.e_m.dataloader_params)
+      dl_trn = DataLoader(ds_trn, shuffle=True, **self.e_m.dataloader_params)
       dl_val = DataLoader(ds_val, **self.e_m.dataloader_params)
 
       metrics['trn_history'].append([])

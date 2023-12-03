@@ -39,7 +39,7 @@ class TrainMaker():
   @property
   def output_train(self): return getattr(self, '__output_train')
   @property
-  def metric(self): return getattr(self, '__metric')
+  def metric(self): return getattr(self, '__metric').to(self.device)
   @property
   def epochs(self): return getattr(self, '__epochs')
   @property

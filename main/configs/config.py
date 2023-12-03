@@ -1,9 +1,10 @@
 import torch
+import torchmetrics
 from models import ANN, RMSLELoss
 from metrics import RootMeanSquaredLogError
 
 
-EXPERIMENT_NAME = 'experiment_2_epoch_50'
+EXPERIMENT_NAME = 'experiment_6'
 
 config = {
   'input_files': {
@@ -19,23 +20,24 @@ config = {
   'model': ANN,
   'model_params': {
     'input_dim': 'auto', # Always will be determined by the data shape
-    'hidden_dim': [64, 64, 64],
+    'hidden_dim': [128, 256, 64],
     'use_drop': True,
-    'drop_ratio': 0.7,
+    'drop_ratio': 0.3,
     'activation': 'relu',
   },
   'train_params': {
     'loss': RMSLELoss(),
+    # 'loss': torch.nn.MSELoss(),
     'optim': torch.optim.Adam,
     # 'metric': torchmetrics.MeanSquaredError(squared=False),
     'metric': RootMeanSquaredLogError(),
-    'device': 'cpu',
-    'epochs': 50,
+    'device': 'cuda:0',
+    'epochs': 150,
     'data_loader_params': {
       'batch_size': 32,
     },
     'optim_params': {
-      'lr': 0.001,
+      'lr': 0.00001,
     },
   },
   'cv_params':{
