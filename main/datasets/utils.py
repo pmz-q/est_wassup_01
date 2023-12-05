@@ -82,13 +82,19 @@ def custom_X_preprocess_cat(X_df: Type[pd.DataFrame]) -> Type[pd.DataFrame]:
   if '요일' in X_df.columns:
     # 월 화 수 목 금 토 일
     X_df['요일'] = X_df['요일'].map(lambda x: 
-      0 if x == '월' else
-      1 if x == '화' else
-      2 if x == '수' else
-      3 if x == '목' else
-      4 if x == '금' else
-      5 if x == '토' else
+      0 if x == '월요일' else
+      1 if x == '화요일' else
+      2 if x == '수요일' else
+      3 if x == '목요일' else
+      4 if x == '금요일' else
+      5 if x == '토요일' else
       6
     )
   
   return X_df
+
+# def add_new_features(X_df: Type[pd.DataFrame]) -> Type[pd.DataFrame]:
+#   X_df = X_df.copy()
+  
+#   # 대구시 최근 10년 월별 강수량
+  

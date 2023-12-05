@@ -5,7 +5,6 @@ DROP_X_COLS = []
 
 # USE_X_COLS = ['사고일시', '사고유형']
 USE_X_COLS = ['사고일시', '요일', '기상상태', '시군구', '도로형태', '노면상태', '사고유형']
-# USE_X_COLS = ['사고일시', '요일', '기상상태', '도로형태', '노면상태', '사고유형']
 
 SCALER = {
   "standard": StandardScaler,
@@ -21,7 +20,8 @@ config = {
   'output_data': {
     'train_feas_csv': './data/features/train_X.csv',
     'test_feas_csv': './data/features/test_X.csv',
-    'train_target_csv': './data/features/train_target.csv'
+    'train_target_csv': './data/features/train_target.csv',
+    'train_target_original_csv': './data/features/train_target_original.csv'
   },
   'options': {
     'index_col': 'ID',
@@ -30,7 +30,8 @@ config = {
     'drop_cols': DROP_X_COLS,
     'use_cols': USE_X_COLS,
     'fill_num_strategy': 'min', # choose one: ['min', 'mean', 'max']
-    # 'x_scaler': SCALER['minmax'](), # put None for no X scaling process
-    'x_scaler': None
+    'x_scaler': SCALER['minmax'](), # put None for no X scaling process
+    'y_scaler': SCALER['minmax'](), # put None for no y scaling process
+    # 'x_scaler': None
   }
 }

@@ -18,11 +18,15 @@ class KFoldCV:
   def run(self):
     manual_seed(2023)
     kfold = KFold(n_splits=self.e_m.n_split, shuffle=False)
-    metrics = {'trn_rmsle': [], 'val_rmsle': [], 'trn_history': [], 'val_history': []}
+    metrics = {'trn_rmse': [], 'val_rmse': []}
+    for k,_ in self.e_m.get_metrics().items():
+        metrics[f'trn_history_{k}'] = []
+        metrics[f'val_history_{k}'] = []
+    
     X = self.e_m.get_X()
     y = self.e_m.get_y()
-    print(X.shape)
-    print(y.shape)
+    # print(X.shape)
+    # print(y.shape)
     for i, (trn_idx, val_idx) in enumerate(kfold.split(X)):
       self.e_m.init_model()
       X_trn, y_trn = X[trn_idx], y[trn_idx]
@@ -34,23 +38,29 @@ class KFoldCV:
       dl_trn = DataLoader(ds_trn, shuffle=True, **self.e_m.dataloader_params)
       dl_val = DataLoader(ds_val, **self.e_m.dataloader_params)
 
-      metrics['trn_history'].append([])
-      metrics['val_history'].append([])
+      for k,_ in self.e_m.get_metrics().items():
+        metrics[f'trn_history_{k}'].append([])
+        metrics[f'val_history_{k}'].append([])
+      
       pbar = trange(self.e_m.epochs) #trange Tqdm + range
       for _ in pbar:
+        values = {f'{which}{k}':'' for which in ['trn_', 'val_'] for k in self.e_m.get_metrics().keys()}
         Train.train_one_epoch(**{**self.e_m.get_train_parameters(), 'data_loader': dl_trn})
-        trn_rmsle = self.e_m.metric.compute().item()
-        self.e_m.metric.reset()
+        for k,m in self.e_m.get_metrics().items():
+          trn_m = m.compute().item()
+          values[f'trn_{k}'] = trn_m
+          metrics[f'trn_history_{k}'][i].append(trn_m)
+          m.reset()
         
         Evaluate.run(**{**self.e_m.get_eval_parameters(), 'data_loader': dl_val})
-        val_rmsle = self.e_m.metric.compute().item()
-        self.e_m.metric.reset()
-        
-        metrics['trn_history'][i].append(trn_rmsle)
-        metrics['val_history'][i].append(trn_rmsle)
-        pbar.set_postfix(trn_rmsle=trn_rmsle, val_rmsle=val_rmsle)
-      metrics['trn_rmsle'].append(trn_rmsle)
-      metrics['val_rmsle'].append(val_rmsle)
+        for k,m in self.e_m.get_metrics().items():
+          val_m = m.compute().item()
+          values[f'val_{k}'] = val_m
+          metrics[f'val_history_{k}'][i].append(val_m)
+          m.reset()
+        pbar.set_postfix(**values)
+      metrics['trn_rmse'].append(metrics[f'trn_history_rmse'][i][-1])
+      metrics['val_rmse'].append(metrics[f'val_history_rmse'][i][-1])
     return pd.DataFrame(metrics)
 
   def __call__(self):

@@ -14,15 +14,23 @@ import pandas as pd
 class HomeData(Dataset):
   fill_num_strategy: Literal['mean', 'min', 'max'] = 'min'
   x_scaler: BaseEstimator = None
+  y_scaler: BaseEstimator = None
   
   def _scale_X(self, X_df: pd.DataFrame):
     self.x_scaler.fit(X_df)
     return self.x_scaler.transform(X_df).astype(dtype=np.float32)
 
-  def _scale_Y(self, target:iter):
-    return target
+  def _scale_Y(self, target_origin:iter):
+    target = pd.DataFrame(target_origin)
+    if self.y_scaler == None:
+      return target, target
+    self.y_scaler.fit(target)
+    return target_origin, pd.DataFrame(self.y_scaler.transform(target).astype(dtype=np.float32))
 
   def _X_preprocess(self, X_df: pd.DataFrame):
+    # Custom X preprocess for cat data - label encoded or cat objects
+    X_df = custom_X_preprocess_cat(X_df)
+    
     # Numeric
     df_num = X_df.select_dtypes(include=['number'])
     if self.fill_num_strategy == 'mean':
@@ -32,15 +40,8 @@ class HomeData(Dataset):
     elif self.fill_num_strategy == 'max':
       fill_values = df_num.max(axis=1)
     df_num.fillna(fill_values, inplace=True)
-    
     if self.x_scaler is not None:
       df_num = pd.DataFrame(self._scale_X(df_num))
-    
-    # Custom X preprocess for cat data
-    X_df = custom_X_preprocess_cat(X_df)
-    
-    # cat encoded to num
-    df_cat_num = X_df.select_dtypes(include=['number'])
     
     # Categorical
     df_cat = X_df.select_dtypes(include=['object'])
@@ -49,11 +50,16 @@ class HomeData(Dataset):
     enc = OneHotEncoder(dtype=np.float32, sparse_output=False, drop='if_binary', handle_unknown='ignore')
     df_cat_onehot = pd.DataFrame(enc.fit_transform(df_cat))
     
-    df_arr = pd.concat([df_num.reset_index(drop=True), df_cat_num.reset_index(drop=True), df_cat_onehot.reset_index(drop=True)], axis=1).set_index(X_df.index)
+    df_arr = pd.concat([df_num.reset_index(drop=True), df_cat_onehot.reset_index(drop=True)],axis=1).set_index(X_df.index)
     
     return df_arr
   
   def preprocess(self):
+    """_summary_
+
+    Returns:
+        trn_X, scaled_target, target_origin, tst_X
+    """
     trn_df, target, tst_df = self._get_dataset()
 
     # X Features
@@ -61,6 +67,6 @@ class HomeData(Dataset):
     tst_X = self._X_preprocess(tst_df)
     
     # Y Feature
-    target = self._scale_Y(target)
+    target_origin, scaled_target = self._scale_Y(target)
 
-    return trn_X, target, tst_X
+    return trn_X, scaled_target, target_origin, tst_X
