@@ -39,8 +39,6 @@ class TrainMaker():
   @property
   def output_train(self): return getattr(self, '__output_train')
   @property
-  def metric(self): return getattr(self, '__metric')
-  @property
   def epochs(self): return getattr(self, '__epochs')
   @property
   def model(self): return self.__model
@@ -51,16 +49,22 @@ class TrainMaker():
   @property
   def dataloader_params(self): return getattr(self, '__data_loader_params')
   
+  def get_metrics(self):
+    metrics = getattr(self, '__metrics')
+    for v in metrics.values():
+      v.to(self.device)
+    return metrics
+  
   def get_train_parameters(self):
     """
     Returns:
-        { model, criterion, optimizer, dataloader, metric, device }
+        { model, criterion, optimizer, dataloader, metrics[dict], device }
     """
     return {
       "model": self.model,
       "criterion": self.criterion,
       "optimizer": self.optimizer,
       "data_loader": self.dataloader,
-      "metric": self.metric,
+      "metrics": self.get_metrics(),
       "device": self.device
     }
