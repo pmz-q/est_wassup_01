@@ -6,10 +6,10 @@ def main(train_cfg, prep_cfg):
   options = prep_cfg.get('options')
   output_csv = prep_cfg.get('output_data')
   Predict(
-    options.get('y_scaler'),
-    output_csv.get('train_target_original_csv'),
-    options.get('index_col'),
-    options.get('target_col'),
+    index_col=options.get('index_col'),
+    target_cols=options.get('target_cols'),
+    y_scaler_save=output_csv.get('y_scaler_save'),
+    y_scaler=options.get('y_scaler'),
     **train_cfg
   ).run()
 

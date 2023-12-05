@@ -15,7 +15,7 @@ class Dataset:
   train_csv: str
   test_csv: str
   index_col: str
-  target_col: str
+  target_cols: list
   drop_cols: tuple[str] = __DEFAULT_DROP_COLS
   use_cols: tuple[str] = __DEFAULT_USE_COLS
   ignore_drop_cols: bool = True
@@ -24,9 +24,9 @@ class Dataset:
   def _read_df(self, split:Literal['train', 'test']='train'):
     if split == 'train':
       df = pd.read_csv(self.train_csv, index_col=self.index_col)
-      df.dropna(axis=0, subset=[self.target_col], inplace=True)
-      target = df[self.target_col]
-      df.drop([self.target_col], axis=1, inplace=True)
+      df.dropna(axis=0, subset=self.target_cols, inplace=True)
+      target = df[self.target_cols]
+      df.drop(self.target_cols, axis=1, inplace=True)
       return df, target
     elif split == 'test':
       df = pd.read_csv(self.test_csv, index_col=self.index_col)

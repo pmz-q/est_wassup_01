@@ -93,8 +93,9 @@ def custom_X_preprocess_cat(X_df: Type[pd.DataFrame]) -> Type[pd.DataFrame]:
   
   return X_df
 
-# def add_new_features(X_df: Type[pd.DataFrame]) -> Type[pd.DataFrame]:
-#   X_df = X_df.copy()
+def merge_features_from_externals(X_df: Type[pd.DataFrame]) -> Type[pd.DataFrame]:
+  X_df = X_df.copy()
   
-#   # 대구시 최근 10년 월별 강수량
+  # main/data/origin/externals 에서 데이터 가져와서 추가 EDA 진행
+  return X_df
   

@@ -3,7 +3,7 @@ from makers import TrainMaker
 from torch import nn, save
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
-from torchmetrics import Metric
+from torchmetrics import MetricCollection
 from typing import Type
 from tqdm.auto import trange
 from utils.file_saver import create_path_if_not_exists
