@@ -25,14 +25,15 @@ config = {
     'activation': 'relu',
   },
   'train_params': {
-    # 'loss': RMSLELoss(),
-    'loss': torch.nn.MSELoss(),
+    'loss': RMSLELoss(),
+    # 'loss': torch.nn.MSELoss(),
     'optim': torch.optim.Adam,
+    'main_metric': 'rmse',
     'metrics': {
       'rmse': torchmetrics.MeanSquaredError(squared=False),
-      'mse': torchmetrics.MeanSquaredError()
+      'mse': torchmetrics.MeanSquaredError(),
+      'rmsle': RootMeanSquaredLogError()
     },
-    # 'metric': RootMeanSquaredLogError(),
     'device': 'cuda:0',
     'epochs': 20,
     'data_loader_params': {

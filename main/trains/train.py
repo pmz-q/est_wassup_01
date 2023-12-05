@@ -12,7 +12,7 @@ from utils.file_saver import create_path_if_not_exists
 @dataclass
 class Train:
   @classmethod
-  def train_one_epoch(cls, model: Type[nn.Module], criterion: callable, optimizer: Type[Optimizer], data_loader: Type[DataLoader], device: str, metrics:dict) -> None:
+  def train_one_epoch(cls, model: Type[nn.Module], criterion: callable, optimizer: Type[Optimizer], data_loader: Type[DataLoader], device: str, metrics:Type[MetricCollection]) -> None:
     '''train one epoch
     '''
     model.train()
@@ -23,19 +23,19 @@ class Train:
       optimizer.zero_grad()
       loss.backward()
       optimizer.step()
-      for _,m in metrics.items():
-        m.update(output, y)
+      metrics.update(output, y)
   
   @classmethod
   def run(cls, t_m: Type[TrainMaker]) -> None:
-    values = {k:[] for k in t_m.get_metrics().keys()}
+    trn_metrics = t_m.metrics['trn']
+    trn_values = {k: '' for k in trn_metrics.keys()}
     pbar = trange(t_m.epochs)
     for _ in pbar:
       train_params = t_m.get_train_parameters()
       cls.train_one_epoch(**train_params)
-      for k,m in t_m.get_metrics().items():
-        values[k].append(m.compute().item())
-      pbar.set_postfix(**{k:v[-1] for k,v in values.items()})
+      for k,v in trn_metrics.compute().items(): trn_values[k]=v.item()
+      trn_metrics.reset()
+      pbar.set_postfix(trn_values)
     create_path_if_not_exists(t_m.output_train)
     save(t_m.model.state_dict(), t_m.output_train)
   

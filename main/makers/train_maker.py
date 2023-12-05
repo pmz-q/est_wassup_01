@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import torch
 from torch import nn, device
+from torchmetrics import MetricCollection
 from torch.utils.data import DataLoader
 from torch.utils.data.dataset import TensorDataset
 from typing import Type
@@ -16,6 +17,7 @@ class TrainMaker():
         setattr(self, f'__{k}', v)
     self.__set_dataloader()
     self.init_model()
+    self.init_metric_collection()
     
   def __set_optimizer(self):
     self.__optimizer = getattr(self, '__optim')(self.model.parameters(), **getattr(self, '__optim_params'))
@@ -31,6 +33,11 @@ class TrainMaker():
     self.__model_params['input_dim'] = X_trn.shape[-1]
     self.__model = self.__model_cls(**self.__model_params).to(self.device)
     self.__set_optimizer()
+  
+  def init_metric_collection(self):
+    metrics = MetricCollection(getattr(self, '__metrics'))
+    self.__val_metrics = metrics.clone(prefix='val_').to(self.device)
+    self.__trn_metrics = metrics.clone(prefix='trn_').to(self.device)
   
   @property
   def criterion(self): return getattr(self, '__loss')
@@ -48,23 +55,21 @@ class TrainMaker():
   def dataloader(self): return self.__dataloader
   @property
   def dataloader_params(self): return getattr(self, '__data_loader_params')
-  
-  def get_metrics(self):
-    metrics = getattr(self, '__metrics')
-    for v in metrics.values():
-      v.to(self.device)
-    return metrics
+  @property
+  def metrics(self): return {'val': self.__val_metrics, 'trn': self.__trn_metrics}
+  @property
+  def main_metric(self): return getattr(self, '__main_metric')
   
   def get_train_parameters(self):
     """
     Returns:
-        { model, criterion, optimizer, dataloader, metrics[dict], device }
+        { model, criterion, optimizer, dataloader, metrics[trn], device }
     """
     return {
       "model": self.model,
       "criterion": self.criterion,
       "optimizer": self.optimizer,
       "data_loader": self.dataloader,
-      "metrics": self.get_metrics(),
+      "metrics": self.metrics['trn'],
       "device": self.device
     }

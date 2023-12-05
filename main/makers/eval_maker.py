@@ -24,12 +24,12 @@ class EvalMaker(TrainMaker):
   
   def get_eval_parameters(self):
     """
-    return [ model, dataloader, metrics[dict], device ]
+    return [ model, dataloader, metrics[val], device ]
     """
     return {
       "model": self.model,
       "data_loader": self.dataloader,
-      "metrics": self.get_metrics(),
+      "metrics": self.metrics['val'],
       "device": self.device
     }
     
