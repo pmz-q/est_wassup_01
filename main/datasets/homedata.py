@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import Literal
 from sklearn.base import BaseEstimator
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
 from .utils import custom_X_preprocess_cat
 
 import numpy as np
@@ -45,8 +46,6 @@ class HomeData(Dataset):
     
     # Categorical
     df_cat = X_df.select_dtypes(include=['object'])
-    
-    # print(df_cat)
     enc = OneHotEncoder(dtype=np.float32, sparse_output=False, drop='if_binary', handle_unknown='ignore')
     df_cat_onehot = pd.DataFrame(enc.fit_transform(df_cat))
     
