@@ -22,6 +22,13 @@ class TrainMaker():
   def __set_optimizer(self):
     self.__optimizer = getattr(self, '__optim')(self.model.parameters(), **getattr(self, '__optim_params'))
 
+  def __set_scheduler(self):
+    if getattr(self, '__use_scheduler'):
+      params = getattr(self, '__scheduler_params')
+      self.__scheduler = getattr(self, '__scheduler_cls')(self.optimizer, **params)
+    else:
+      self.__scheduler = None
+
   def __set_dataloader(self):
     X_trn = torch.tensor(pd.read_csv(getattr(self, '__X_csv'), index_col=0).to_numpy(dtype=np.float32))
     y_trn = torch.tensor(pd.read_csv(getattr(self, '__y_csv'), index_col=0).to_numpy(dtype=np.float32))
@@ -33,6 +40,7 @@ class TrainMaker():
     self.__model_params['input_dim'] = X_trn.shape[-1]
     self.__model = self.__model_cls(**self.__model_params).to(self.device)
     self.__set_optimizer()
+    self.__set_scheduler()
   
   def init_metric_collection(self):
     metrics = MetricCollection(getattr(self, '__metrics'))
@@ -59,11 +67,13 @@ class TrainMaker():
   def metrics(self): return {'val': self.__val_metrics, 'trn': self.__trn_metrics}
   @property
   def main_metric(self): return getattr(self, '__main_metric')
+  @property
+  def scheduler(self): return self.__scheduler
   
   def get_train_parameters(self):
     """
     Returns:
-        { model, criterion, optimizer, dataloader, metrics[trn], device }
+        { model, criterion, optimizer, dataloader, metrics[trn], device, scheduler }
     """
     return {
       "model": self.model,
@@ -71,5 +81,6 @@ class TrainMaker():
       "optimizer": self.optimizer,
       "data_loader": self.dataloader,
       "metrics": self.metrics['trn'],
-      "device": self.device
+      "device": self.device,
+      "scheduler": self.scheduler
     }
