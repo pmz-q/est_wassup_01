@@ -1,3 +1,4 @@
+import joblib
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator
@@ -11,37 +12,31 @@ from .train_maker import TrainMaker
 class PredMaker(TrainMaker):
   def __init__(
     self,
-    y_scaler: Type[BaseEstimator],
-    train_target_original_csv: str,
     index_col: str,
-    target_col: str,
+    target_cols: list=[],
+    y_scaler_save: str='',
+    y_scaler: Type[BaseEstimator]=None,
     **kwargs
   ):
     self.__y_scaler = y_scaler
-    self.__y_origin_csv = train_target_original_csv
+    self.__y_scaler_save = y_scaler_save
     self.__index_col = index_col
-    self.__target_col = target_col
+    self.__target_cols = target_cols
     super().__init__(**kwargs)
   
   @property
   def y_origin_csv(self): return getattr(self, '__y_origin_csv')
   @property
   def y_output_csv(self): return getattr(self, '__output_pred')
+  @property
+  def y_scaler(self): return None if self.__y_scaler == None else joblib.load(self.__y_scaler_save)
   
   def get_idx_target_cols(self):
     """
     Returns:
-        [index_col, target_col]
+        [index_col, target_cols[list]]
     """
-    return [self.__index_col, self.__target_col]
-  
-  def get_y_scaler(self):
-    scaler = self.__y_scaler
-    if scaler == None:
-      return None
-    y_origin = pd.read_csv(self.__y_origin_csv, index_col=0)
-    scaler.fit(y_origin)
-    return scaler
+    return [self.__index_col, self.__target_cols]
   
   def get_tst_X(self):
     """

@@ -23,9 +23,7 @@ class Evaluate:
       for X, y in data_loader:
         X, y = X.to(device), y.to(device)
         output = model(X)
-        # print(output[0], y[0])
-        for _, m in metrics.items():
-          m.update(output, y)
+        metrics.update(output, y)
   
   @classmethod
   def __call__(cls, eval_maker: EvalMaker) -> None:

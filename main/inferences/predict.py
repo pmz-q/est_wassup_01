@@ -1,6 +1,7 @@
+import numpy as np
 import pandas as pd
-from sklearn.base import BaseEstimator
 import torch
+from sklearn.base import BaseEstimator
 from typing import Any, Type
 from makers import PredMaker
 from utils import create_path_if_not_exists
@@ -9,25 +10,27 @@ from utils import create_path_if_not_exists
 class Predict():
   def __init__(
     self, 
-    y_scaler: Type[BaseEstimator],
-    train_target_original_csv: str,
     index_col: str,
-    target_col: str,
+    target_cols: list=[],
+    y_scaler_save: str='',
+    y_scaler: Type[BaseEstimator]=None,
     **kwargs: Any
   ):
-    self.p_m = PredMaker(y_scaler, train_target_original_csv, index_col, target_col, **kwargs)
+    self.p_m = PredMaker(index_col, target_cols, y_scaler_save, y_scaler, **kwargs)
   
   def inference_test_ann(self, dl_tst):
     result = []
     with torch.inference_mode():
       for X in dl_tst:
+        # TODO: multi task features should be added
         X = X[0].to(self.p_m.device)
         output = self.p_m.model(X).squeeze().tolist()
         result.extend(output)
     return result
 
   def unnormalization(self, pred:iter):
-    scaler = self.p_m.get_y_scaler()
+    scaler = self.p_m.y_scaler
+    # TODO: additional feature when y_scaler is a python function
     if scaler == None:
       return pred
     return scaler.inverse_transform(pd.DataFrame(pred))
@@ -38,11 +41,10 @@ class Predict():
     
     X_tst_index, X_tst_dl = self.p_m.get_tst_X()
     result = self.inference_test_ann(X_tst_dl)
-    id, target_col = self.p_m.get_idx_target_cols()
+    id, target_cols = self.p_m.get_idx_target_cols()
+    list_df = pd.DataFrame(zip(X_tst_index, result), columns=np.concatenate([[id], target_cols]))
     
-    list_df = pd.DataFrame(zip(X_tst_index, result), columns=[id, target_col])
-    
-    list_df[target_col] = self.unnormalization(list_df[target_col])
-    list_df[target_col] = list_df[target_col].apply(lambda x: x if x >= 0 else 0)
+    list_df[target_cols] = self.unnormalization(list_df[target_cols])
+    list_df[target_cols] = list_df[target_cols].apply(lambda x: x.fillna(0))
     create_path_if_not_exists(self.p_m.y_output_csv)
     list_df.to_csv(self.p_m.y_output_csv, index=False)
