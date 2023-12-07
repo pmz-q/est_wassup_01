@@ -10,7 +10,7 @@ SCHEDULER = {
   'lambdaLR': optim.lr_scheduler.LambdaLR, # https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.LambdaLR.html
 }
 
-EXPERIMENT_NAME = 'experiment_8'
+EXPERIMENT_NAME = 'experiment_9'
 
 config = {
   'input_files': {
@@ -26,10 +26,15 @@ config = {
   'model': ANN,
   'model_params': {
     'input_dim': 'auto', # Always will be determined by the data shape
-    'hidden_dim': [1024, 1024, 1024],
+    'hidden_dim': [128, 64],
     'use_drop': True,
-    'drop_ratio': 0.2,
+    'drop_ratio': 0.6,
     'activation': 'relu',
+    
+    # Embedding params
+    # embed_cols_len 은 만약 embedding 을 원치 않을 경우, 0으로 설정해주세요.
+    'embed_cols_len': 1, # preprocess_config 에서 설정한 column 갯수
+    'embed_dim': 10 # 늘릴 차원의 수
   },
   'train_params': {
     # 'loss': RMSLELoss(),
@@ -39,7 +44,7 @@ config = {
       # 'T_0': 200,
       # 'T_mult': 2,
       'T_max': 200,
-      'eta_min': 0.0001
+      'eta_min': 0.0000001
     },
     'loss': torch.nn.MSELoss(),
     'optim': torch.optim.Adam,
@@ -47,7 +52,7 @@ config = {
     'metrics': {
       'rmse': torchmetrics.MeanSquaredError(squared=False),
       'mse': torchmetrics.MeanSquaredError(),
-      # 'rmsle': RootMeanSquaredLogError()
+      'rmsle': RootMeanSquaredLogError()
     },
     'device': 'cuda:0',
     'epochs': 200,
