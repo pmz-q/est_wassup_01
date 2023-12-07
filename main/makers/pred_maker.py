@@ -14,6 +14,7 @@ class PredMaker(TrainMaker):
     self,
     index_col: str,
     target_cols: list=[],
+    target_drop_col: str='',
     y_scaler_save: str='',
     y_scaler: Type[BaseEstimator]=None,
     **kwargs
@@ -22,6 +23,7 @@ class PredMaker(TrainMaker):
     self.__y_scaler_save = y_scaler_save
     self.__index_col = index_col
     self.__target_cols = target_cols
+    self.__target_drop_col = target_drop_col
     super().__init__(**kwargs)
   
   @property
@@ -36,7 +38,7 @@ class PredMaker(TrainMaker):
     Returns:
         [index_col, target_cols[list]]
     """
-    return [self.__index_col, self.__target_cols]
+    return [self.__index_col, self.__target_cols, self.__target_drop_col]
   
   def get_tst_X(self):
     """

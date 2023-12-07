@@ -37,11 +37,11 @@ class HoldoutWithTestCSV:
     val_values = {k: [] for k in val_metrics.keys()}
     for _ in pbar:
       Train.train_one_epoch(**{**self.e_m.get_train_parameters(), 'data_loader': dl_trn})
-      for k,v in trn_metrics.compute().items(): trn_values[k].append(v.item())
+      for k,v in trn_metrics.compute().items(): trn_values[k].append(self.e_m.calc_multi_output_weight(v))
       trn_metrics.reset()
       
       Evaluate.run(**{**self.e_m.get_eval_parameters(), 'data_loader': dl_val})
-      for k,v in val_metrics.compute().items(): val_values[k].append(v.item())
+      for k,v in val_metrics.compute().items(): val_values[k].append(self.e_m.calc_multi_output_weight(v))
       val_metrics.reset()
       
       pbar.set_postfix({trn_main_metric: trn_values[trn_main_metric][-1], val_main_metric: val_values[val_main_metric][-1]})

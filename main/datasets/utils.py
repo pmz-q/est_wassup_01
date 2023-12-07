@@ -16,8 +16,9 @@ def custom_X_preprocess_cat(X_df: Type[pd.DataFrame]) -> Type[pd.DataFrame]:
   # ['사고일시', '요일', '기상상태', '시군구', '도로형태', '노면상태', '사고유형']
   # 사고일시 yyyy-mm-dd hh datetime - 시간 컬럼 생성
   if '사고일시' in X_df.columns:
-    X_df['시간'] = X_df['사고일시'].str.split(' ').str[-1].astype(int)
-    X_df['월'] = X_df['사고일시'].str.split('-').str[1].astype(int)
+    X_df['사고일시'] = pd.to_datetime(X_df['사고일시'])
+    X_df['시간'] = X_df['사고일시'].dt.hour
+    X_df['월'] = X_df['사고일시'].dt.month
     X_df.drop(columns=['사고일시'], inplace=True)
     
   
@@ -98,4 +99,3 @@ def merge_features_from_externals(X_df: Type[pd.DataFrame]) -> Type[pd.DataFrame
   
   # main/data/origin/externals 에서 데이터 가져와서 추가 EDA 진행
   return X_df
-  

@@ -44,7 +44,7 @@ class Train:
     for _ in pbar:
       train_params = t_m.get_train_parameters()
       cls.train_one_epoch(**train_params)
-      for k,v in trn_metrics.compute().items(): trn_values[k]=v.item()
+      for k,v in trn_metrics.compute().items(): trn_values[k]=t_m.calc_multi_output_weight(v)
       trn_metrics.reset()
       pbar.set_postfix(trn_values)
     create_path_if_not_exists(t_m.output_train)

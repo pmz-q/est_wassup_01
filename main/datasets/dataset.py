@@ -16,6 +16,7 @@ class Dataset:
   test_csv: str
   index_col: str
   target_cols: list
+  target_drop_col: str
   drop_cols: tuple[str] = __DEFAULT_DROP_COLS
   use_cols: tuple[str] = __DEFAULT_USE_COLS
   ignore_drop_cols: bool = True
@@ -27,6 +28,8 @@ class Dataset:
       df.dropna(axis=0, subset=self.target_cols, inplace=True)
       target = df[self.target_cols]
       df.drop(self.target_cols, axis=1, inplace=True)
+      if len(self.target_cols) > 1:
+        df.drop([self.target_drop_col], axis=1, inplace=True)
       return df, target
     elif split == 'test':
       df = pd.read_csv(self.test_csv, index_col=self.index_col)

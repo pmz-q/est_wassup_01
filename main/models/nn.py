@@ -14,6 +14,7 @@ class ANN(nn.Module):
     drop_ratio: float=0.0,
     embed_cols_len: int = 0, # 차원 늘릴 원본 컬럼의 갯수
     embed_dim: int=10, # 늘릴 차원
+    output_dim: int=1
   ):
     super().__init__()
     dims = [input_dim + (
@@ -29,7 +30,7 @@ class ANN(nn.Module):
     
     model = [[nn.Linear(dims[i], dims[i+1]), self.dropout if use_drop else self.Identity, self.activation] for i in range(len(dims) - 1)]
     # output_layer = [nn.Linear(dims[-1], 1), nn.ReLU()] # 대구 교통사고 데이터 기준 음수 값이 나오는 경우가 있어서 제거
-    output_layer = [nn.Linear(dims[-1], 1), nn.Identity()]
+    output_layer = [nn.Linear(dims[-1], output_dim), nn.Identity()]
     self.module_list= nn.ModuleList(sum(model, []) + output_layer)
   
   def forward(self, x):

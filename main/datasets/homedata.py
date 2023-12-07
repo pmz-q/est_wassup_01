@@ -33,7 +33,10 @@ class HomeData(Dataset):
     if self.y_scaler == None:
       return pd.DataFrame(target)
     self.y_scaler.fit(target)
-    return pd.DataFrame(self.y_scaler.transform(target).astype(dtype=np.float32))
+    return pd.DataFrame(
+      self.y_scaler.transform(target).astype(dtype=np.float32),
+      columns=self.y_scaler.get_feature_names_out()
+    )
 
   def _X_preprocess(self, X_df: pd.DataFrame):
     # Add new features from external datasets
