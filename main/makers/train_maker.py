@@ -59,6 +59,8 @@ class TrainMaker():
   @property
   def output_train(self): return getattr(self, '__output_train')
   @property
+  def output_train_loss(self): return getattr(self, '__output_train_loss')
+  @property
   def epochs(self): return getattr(self, '__epochs')
   @property
   def model(self): return self.__model

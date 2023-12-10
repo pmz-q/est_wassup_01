@@ -9,7 +9,8 @@ class MultiTaskMSELoss(nn.Module):
 
     def _custom_calc(self, pred:Tensor, actual:Tensor, task_num):
       if self.task_num == task_num: return 0
-      mse = self.mse(pred[:,task_num], actual[:,task_num]) * self.weights_per_task[task_num]
+      mse = self.mse(pred[:,task_num], actual[:,task_num])
+      mse = mse * self.weights_per_task[task_num]
       return mse + self._custom_calc(pred, actual, task_num+1)
     
     def forward(self, pred, actual):

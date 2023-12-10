@@ -13,12 +13,14 @@ class PredMaker(TrainMaker):
   def __init__(
     self,
     index_col: str,
+    origin_tst: str,
     target_cols: list=[],
     target_drop_col: str='',
     y_scaler_save: str='',
     y_scaler: Type[BaseEstimator]=None,
     **kwargs
   ):
+    self.__origin_tst = origin_tst
     self.__y_scaler = y_scaler
     self.__y_scaler_save = y_scaler_save
     self.__index_col = index_col
@@ -46,6 +48,9 @@ class PredMaker(TrainMaker):
         X_index, X_Dataloader
     """
     X_tst = pd.read_csv(getattr(self, '__tst_csv'), index_col=0)
+    X_tst.drop_duplicates(inplace=True)
     X_tst_tensor = torch.tensor(X_tst.to_numpy(dtype=np.float32))
     ds_tst = TensorDataset(X_tst_tensor)
-    return X_tst.index.tolist(), DataLoader(ds_tst, **self.dataloader_params)
+    
+    X_tst_index = pd.read_csv(self.__origin_tst)[self.__index_col]
+    return X_tst_index, DataLoader(ds_tst, **self.dataloader_params)

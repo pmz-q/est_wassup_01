@@ -28,7 +28,7 @@ class ANN(nn.Module):
     self.embed_layer = nn.Linear(1, embed_dim)
     self.embed_cols_len = embed_cols_len
     
-    model = [[nn.Linear(dims[i], dims[i+1]), self.dropout if use_drop else self.Identity, self.activation] for i in range(len(dims) - 1)]
+    model = [[nn.Linear(dims[i], dims[i+1]), nn.BatchNorm1d(dims[i+1]), self.dropout if use_drop else self.Identity, self.activation] for i in range(len(dims) - 1)]
     # output_layer = [nn.Linear(dims[-1], 1), nn.ReLU()] # 대구 교통사고 데이터 기준 음수 값이 나오는 경우가 있어서 제거
     output_layer = [nn.Linear(dims[-1], output_dim), nn.Identity()]
     self.module_list= nn.ModuleList(sum(model, []) + output_layer)
@@ -37,6 +37,9 @@ class ANN(nn.Module):
     x_new = x[:, : x.shape[1] - self.embed_cols_len]
     for i in range(self.embed_cols_len):
       x_new = torch.concat([x_new, self.embed_layer(x[:,[-i]])], dim=1)
+    # torch.set_printoptions(threshold=10_000)
     for layer in self.module_list:
-         x_new = layer(x_new)
+        # print(layer)
+        x_new = layer(x_new)
+        # print(x_new)
     return x_new

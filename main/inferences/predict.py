@@ -11,13 +11,14 @@ class Predict():
   def __init__(
     self, 
     index_col: str,
+    origin_tst: str,
     target_cols: list=[],
     target_drop_col: str='',
     y_scaler_save: str='',
     y_scaler: Type[BaseEstimator]=None,
     **kwargs: Any
   ):
-    self.p_m = PredMaker(index_col, target_cols, target_drop_col, y_scaler_save, y_scaler, **kwargs)
+    self.p_m = PredMaker(index_col, origin_tst, target_cols, target_drop_col, y_scaler_save, y_scaler, **kwargs)
   
   def inference_test_ann(self, dl_tst):
     result = []
@@ -39,6 +40,9 @@ class Predict():
   def run(self):
     self.p_m.model.load_state_dict(torch.load(self.p_m.output_train))
     self.p_m.model.eval()
+    
+    # for param in self.p_m.model.parameters():
+    #   print(param.data)
     
     X_tst_index, X_tst_dl = self.p_m.get_tst_X()
     result = self.inference_test_ann(X_tst_dl)

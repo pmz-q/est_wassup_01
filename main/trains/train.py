@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from makers import TrainMaker
+import pandas as pd
 from torch import nn, save
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
@@ -40,14 +41,19 @@ class Train:
   def run(cls, t_m: Type[TrainMaker]) -> None:
     trn_metrics = t_m.metrics['trn']
     trn_values = {k: '' for k in trn_metrics.keys()}
+    trn_loss_save = {k: [] for k in trn_metrics.keys()}
     pbar = trange(t_m.epochs)
     for _ in pbar:
       train_params = t_m.get_train_parameters()
       cls.train_one_epoch(**train_params)
-      for k,v in trn_metrics.compute().items(): trn_values[k]=t_m.calc_multi_output_weight(v)
+      for k,v in trn_metrics.compute().items():
+        m = t_m.calc_multi_output_weight(v)
+        trn_values[k] = m
+        trn_loss_save[k].append(m)
       trn_metrics.reset()
       pbar.set_postfix(trn_values)
     create_path_if_not_exists(t_m.output_train)
+    pd.DataFrame(trn_loss_save).to_csv(t_m.output_train_loss)
     save(t_m.model.state_dict(), t_m.output_train)
   
   @classmethod

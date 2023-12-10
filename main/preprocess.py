@@ -8,11 +8,13 @@ if __name__ == "__main__":
   exec(open(args.config, encoding="utf-8").read())
   
   input_data = config.get('input_data')
+  add_data = config.get('add_data')
   options = config.get('options')
   output_data = config.get('output_data')
   
   trn_X, trn_y, tst_X, y_scaler = HomeData(
     **input_data,
+    **add_data,
     **options
   ).preprocess()
   
