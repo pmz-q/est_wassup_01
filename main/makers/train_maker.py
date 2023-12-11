@@ -38,6 +38,8 @@ class TrainMaker():
   def init_model(self):
     X_trn = torch.tensor(pd.read_csv(getattr(self, '__X_csv'), index_col=0).to_numpy(dtype=np.float32))
     self.__model_params['input_dim'] = X_trn.shape[-1]
+    self.__loss_weight = torch.Tensor(getattr(self, '__loss_weight')).to(self.device)
+    self.__model_params['output_dim'] = len(self.__loss_weight)
     self.__model = self.__model_cls(**self.__model_params).to(self.device)
     self.__set_optimizer()
     self.__set_scheduler()
@@ -47,12 +49,17 @@ class TrainMaker():
     self.__val_metrics = metrics.clone(prefix='val_').to(self.device)
     self.__trn_metrics = metrics.clone(prefix='trn_').to(self.device)
   
+  def calc_multi_output_weight(self, output:torch.Tensor):
+    return (output@self.loss_weight).item()
+  
   @property
   def criterion(self): return getattr(self, '__loss')
   @property
   def device(self): return device(getattr(self, '__device'))
   @property
   def output_train(self): return getattr(self, '__output_train')
+  @property
+  def output_train_loss(self): return getattr(self, '__output_train_loss')
   @property
   def epochs(self): return getattr(self, '__epochs')
   @property
@@ -69,6 +76,8 @@ class TrainMaker():
   def main_metric(self): return getattr(self, '__main_metric')
   @property
   def scheduler(self): return self.__scheduler
+  @property
+  def loss_weight(self): return self.__loss_weight
   
   def get_train_parameters(self):
     """

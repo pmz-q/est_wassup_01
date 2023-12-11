@@ -8,6 +8,7 @@ def main(train_cfg, prep_cfg):
   Predict(
     index_col=options.get('index_col'),
     target_cols=options.get('target_cols'),
+    target_drop_col=options.get('target_drop_col'),
     y_scaler_save=output_csv.get('y_scaler_save'),
     y_scaler=options.get('y_scaler'),
     **train_cfg
