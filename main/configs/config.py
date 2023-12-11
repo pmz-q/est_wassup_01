@@ -1,6 +1,6 @@
 import torch
 from torch import optim
-from torchmetrics import MeanSquaredError, MeanSquaredLogError
+from torchmetrics import MeanSquaredError, MeanAbsoluteError
 from torchmetrics.wrappers import MultioutputWrapper
 from models import ANN
 from loss import MultiTaskMSELoss, RMSLELoss
@@ -45,10 +45,10 @@ config = {
     "model": ANN,
     "model_params": {
         "input_dim": "auto",  # Always will be determined by the data shape
-        "hidden_dim": [512, 256],
+        "hidden_dim": [128,128,64,64],
         "use_drop": True,
         "drop_ratio": 0.3,
-        "activation": "tanh",
+        "activation": "sigmoid",
         # Embedding params
         # embed_cols_len 은 만약 embedding 을 원치 않을 경우, 0으로 설정해주세요.
         "embed_cols_len": len(EMBEDDING_COLS),  # preprocess_config 에서 설정한 column 갯수
@@ -61,26 +61,26 @@ config = {
             # 'T_0': 200,
             # 'T_mult': 2,
             "T_max": 10,
-            "eta_min": 0.000001,
+            "eta_min": 0.0001,
         },
-        'loss': RMSLELoss(),
-        # "loss": torch.nn.MSELoss(),
+        # 'loss': RMSLELoss(),
+        "loss": torch.nn.MSELoss(),
         # 'loss': CUSTOM_LOSS['multi_task_mse'](weights_per_task=CUSTOM_WEIGHT),
         "loss_weight": CUSTOM_WEIGHT,
         "optim": torch.optim.Adam,
-        "main_metric": "msle",
+        "main_metric": "rmse",
         "metrics": {
             "rmse": MultioutputWrapper(MeanSquaredError(squared=False), NUM_OF_TASKS),
-            "mse": MultioutputWrapper(MeanSquaredError(), NUM_OF_TASKS),
-            'msle': MultioutputWrapper(MeanSquaredLogError(), NUM_OF_TASKS)
+            "mae": MultioutputWrapper(MeanAbsoluteError(), NUM_OF_TASKS),
+            # 'msle': MultioutputWrapper(MeanSquaredLogError(), NUM_OF_TASKS)
         },
         "device": "cuda:0",
-        "epochs": 40,
+        "epochs": 50,
         "data_loader_params": {
             "batch_size": 32,
         },
         "optim_params": {
-            "lr": 0.00001,
+            "lr": 0.01,
         },
     },
     "cv_params": {

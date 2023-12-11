@@ -27,7 +27,7 @@ def custom_X_preprocess_cat(X_df: pd.DataFrame, add_df_list: list[pd.DataFrame])
 
         # Add new features from external datasets
         X_df = merge_features_from_externals(X_df, add_df_list)
-        X_df = X_df.drop(columns=['동'])
+        # X_df = X_df.drop(columns=['동'])
 
     if '노면상태' in X_df.columns:
         # 건조 젖음/습기 기타 서리/결빙 침수 적설
