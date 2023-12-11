@@ -9,7 +9,7 @@ from makers import EvalMaker
 @dataclass
 class Evaluate:
   @classmethod
-  def run(cls, model: Type[nn.Module], data_loader: Type[DataLoader], metric: Type[Metric], device: str) -> None:
+  def run(cls, model: Type[nn.Module], data_loader: Type[DataLoader], metrics: dict, device: str) -> None:
     '''evaluate
     
     Args:
@@ -23,7 +23,7 @@ class Evaluate:
       for X, y in data_loader:
         X, y = X.to(device), y.to(device)
         output = model(X)
-        metric.update(output, y)
+        metrics.update(output, y)
   
   @classmethod
   def __call__(cls, eval_maker: EvalMaker) -> None:
