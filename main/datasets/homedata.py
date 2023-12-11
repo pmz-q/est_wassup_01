@@ -43,6 +43,9 @@ class HomeData(Dataset):
         # Custom X preprocess for cat data - label encoded or cat objects
         X_df = custom_X_preprocess_cat(X_df, add_df_list)
         
+        if '동' not in self.embedding_cols:
+            X_df.drop(columns=['동'], inplace=True)
+        
         # Embedding - Label Encoding
         df_embed = self._embedding_X(X_df).reset_index(drop=True)
 
@@ -55,6 +58,7 @@ class HomeData(Dataset):
         elif self.fill_num_strategy == "max":
             fill_values = df_num.max(axis=1)
         df_num.fillna(fill_values, inplace=True)
+        df_num.reset_index(drop=True, inplace=True)
         if self.x_scaler is not None:
             df_num = pd.DataFrame(self._scale_X(df_num), columns=df_num.columns)
 
@@ -69,7 +73,7 @@ class HomeData(Dataset):
         enc.fit(df_cat)
         df_cat_onehot = pd.DataFrame(
             enc.transform(df_cat), columns=enc.get_feature_names_out()
-        )
+        ).reset_index(drop=True)
 
         return pd.concat([df_num, df_cat_onehot, df_embed], axis=1).set_index(
             idx
