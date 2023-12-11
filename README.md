@@ -89,6 +89,18 @@ TARGET_COLS - train data의 target 컬럼을 지정
     + cv_params  
         + n_split : evaluation실행 시 사용할 fold 수 선택
 
----
+# EDA
 
+![image](https://github.com/electronicguy97/est_wassup_01/assets/103613730/51435928-e6f8-4579-8ac3-d39744dededf)
+ECLO = 사망자수 * 10 + 중상자수 * 5 + 경상자수 * 3 + 부상자수
+ECLO를 뜻하는 사상자수 외에는 큰 상관관계를 찾을 수 없다. 비선형관계 또는 Multicollinearity(다중공산성)등으로 예측 된다.
+
+
+![image](https://github.com/electronicguy97/est_wassup_01/assets/103613730/cee6b82b-6d8f-4065-b2e1-f997b3e0e5b8)
+ECLO가 18인 경우 9월 외에는 다른 데이터의 분포는 비슷한 것을 보아 상관관계가 높지 않다는 것을 알 수 있다.
+
+![image](https://github.com/electronicguy97/est_wassup_01/assets/103613730/a96cb048-5a44-4bee-ab85-042ab8ecba61)
+해당 feature는 데이터의 불균형이 심해 오히려 상관관계가 높지 않은 것으로 예측된다.
+
+---
 <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=PyTorch&logoColor=white"></t><img src = "https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
