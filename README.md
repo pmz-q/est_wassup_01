@@ -5,8 +5,8 @@
 **WR(Water_Rocket)** <br>
 김도연 : Team Leader 97 회로전공 ENTJ<br> 
 김선들 : Git Branch management (96 컴퓨터전공 INTJ)<br>
-김정현 : 01 소프트웨어전공 ISFJ<br>
-박건수 : 96 정보통신공학전공 ISTP<br></li>
+김정현 : (01 소프트웨어전공 ISFJ)<br>
+박건수 : (96 정보통신공학전공 ISTP)<br></li>
   
 # prepocess_config .py  
   
@@ -35,11 +35,9 @@ TARGET_COLS - train data의 target 컬럼을 지정
         + fill_num_strategy : null 값이 있는 부분을 채울 방법을 min, mean, max 중에서 선택  
         + x_scaler : SCALER['minmax']() put None for no X scaling process  
         + y_scaler : SCALER['minmax']() put None for no y scaling process  
-  
-------------  
-  
-  # config.py  
-  
+
+# config.py  
+
 + SCHEDULER
     + CAWarmRestarts: optim.lr_scheduler.CosineAnnealingWarmRestarts  
         + [참조링크](https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CosineAnnealingWarmRestarts.html#torch.optim.lr_scheduler.CosineAnnealingWarmRestarts)  
