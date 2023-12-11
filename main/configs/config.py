@@ -28,7 +28,7 @@ CUSTOM_LOSS = {
     "rmsle": RMSLELoss,
 }
 
-EXPERIMENT_NAME = "experiment_15"
+EXPERIMENT_NAME = "experiment_18"
 
 config = {
     "input_files": {
@@ -45,10 +45,10 @@ config = {
     "model": ANN,
     "model_params": {
         "input_dim": "auto",  # Always will be determined by the data shape
-        "hidden_dim": [1024, 512, 256],
+        "hidden_dim": [512, 256],
         "use_drop": True,
-        "drop_ratio": 0.6,
-        "activation": "relu",
+        "drop_ratio": 0.3,
+        "activation": "tanh",
         # Embedding params
         # embed_cols_len 은 만약 embedding 을 원치 않을 경우, 0으로 설정해주세요.
         "embed_cols_len": len(EMBEDDING_COLS),  # preprocess_config 에서 설정한 column 갯수
@@ -63,19 +63,19 @@ config = {
             "T_max": 10,
             "eta_min": 0.000001,
         },
-        # 'loss': RMSLELoss(),
-        "loss": torch.nn.MSELoss(),
+        'loss': RMSLELoss(),
+        # "loss": torch.nn.MSELoss(),
         # 'loss': CUSTOM_LOSS['multi_task_mse'](weights_per_task=CUSTOM_WEIGHT),
         "loss_weight": CUSTOM_WEIGHT,
         "optim": torch.optim.Adam,
-        "main_metric": "rmse",
+        "main_metric": "msle",
         "metrics": {
             "rmse": MultioutputWrapper(MeanSquaredError(squared=False), NUM_OF_TASKS),
             "mse": MultioutputWrapper(MeanSquaredError(), NUM_OF_TASKS),
-            # 'rmsle': MultioutputWrapper(MeanSquaredLogError(), NUM_OF_TASKS)
+            'msle': MultioutputWrapper(MeanSquaredLogError(), NUM_OF_TASKS)
         },
         "device": "cuda:0",
-        "epochs": 50,
+        "epochs": 40,
         "data_loader_params": {
             "batch_size": 32,
         },

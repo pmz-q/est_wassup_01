@@ -11,14 +11,13 @@ class Predict():
   def __init__(
     self, 
     index_col: str,
-    origin_tst: str,
     target_cols: list=[],
     target_drop_col: str='',
     y_scaler_save: str='',
     y_scaler: Type[BaseEstimator]=None,
     **kwargs: Any
   ):
-    self.p_m = PredMaker(index_col, origin_tst, target_cols, target_drop_col, y_scaler_save, y_scaler, **kwargs)
+    self.p_m = PredMaker(index_col, target_cols, target_drop_col, y_scaler_save, y_scaler, **kwargs)
   
   def inference_test_ann(self, dl_tst):
     result = []
@@ -48,10 +47,11 @@ class Predict():
     result = self.inference_test_ann(X_tst_dl)
     id, target_cols, target_drop_col = self.p_m.get_idx_target_cols()
     list_df = pd.DataFrame(result, columns=target_cols)
-    list_df[id] = X_tst_index
+    list_df = pd.concat([pd.DataFrame({id: X_tst_index}), list_df], axis=1)
     
     list_df[target_cols] = self.unnormalization(list_df[target_cols])
     list_df[target_cols] = list_df[target_cols].fillna(0)
+    # list_df[target_cols] = list_df[target_cols].map(lambda x: int(np.round(x)))
     
     if len(target_cols) > 1 and target_drop_col != None:
       loss_weight = self.p_m.loss_weight
@@ -63,4 +63,4 @@ class Predict():
       list_df[target_drop_col] = final_result
     
     create_path_if_not_exists(self.p_m.y_output_csv)
-    list_df.to_csv(self.p_m.y_output_csv, index=False)
+    list_df.reset_index(drop=True).to_csv(self.p_m.y_output_csv, index=False, encoding='cp949')

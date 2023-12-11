@@ -39,6 +39,7 @@ class HomeData(Dataset):
         )
 
     def _X_preprocess(self, X_df: pd.DataFrame, add_df_list: list[pd.DataFrame]):
+        idx = X_df.index
         # Custom X preprocess for cat data - label encoded or cat objects
         X_df = custom_X_preprocess_cat(X_df, add_df_list)
         
@@ -71,7 +72,7 @@ class HomeData(Dataset):
         )
 
         return pd.concat([df_num, df_cat_onehot, df_embed], axis=1).set_index(
-            X_df.index
+            idx
         )
 
     def preprocess(self):

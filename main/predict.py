@@ -4,11 +4,9 @@ from inferences import Predict
 
 def main(train_cfg, prep_cfg):
   options = prep_cfg.get('options')
-  input_csv = prep_cfg.get('input_data')
   output_csv = prep_cfg.get('output_data')
   Predict(
     index_col=options.get('index_col'),
-    origin_tst=input_csv.get('test_csv'),
     target_cols=options.get('target_cols'),
     target_drop_col=options.get('target_drop_col'),
     y_scaler_save=output_csv.get('y_scaler_save'),

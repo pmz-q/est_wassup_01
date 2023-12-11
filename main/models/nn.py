@@ -29,8 +29,8 @@ class ANN(nn.Module):
     self.embed_cols_len = embed_cols_len
     
     model = [[nn.Linear(dims[i], dims[i+1]), nn.BatchNorm1d(dims[i+1]), self.dropout if use_drop else self.Identity, self.activation] for i in range(len(dims) - 1)]
-    # output_layer = [nn.Linear(dims[-1], 1), nn.ReLU()] # 대구 교통사고 데이터 기준 음수 값이 나오는 경우가 있어서 제거
-    output_layer = [nn.Linear(dims[-1], output_dim), nn.Identity()]
+    output_layer = [nn.Linear(dims[-1], output_dim), nn.Tanh()] # 대구 교통사고 데이터 기준 음수 값이 나오는 경우가 있어서 제거
+    # output_layer = [nn.Linear(dims[-1], output_dim), nn.Identity()]
     self.module_list= nn.ModuleList(sum(model, []) + output_layer)
   
   def forward(self, x):
