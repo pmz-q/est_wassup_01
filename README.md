@@ -3,17 +3,21 @@
 ![middle](https://capsule-render.vercel.app/api?type=cylinder&color=0147FF&height=150&section=header&text=Wassup&fontColor=FFFFFF&fontSize=70&animation=fadeIn&fontAlignY=55)
   
 **WR(Water_Rocket)** <br>
-김도연 : Team Leader 97 회로전공 ENTJ<br> 
-김선들 : Git Branch management (96 컴퓨터전공 INTJ)<br>
-김정현 : (01 소프트웨어전공 ISFJ)<br>
-박건수 : (96 정보통신공학전공 ISTP)<br></ul>
+김도연 : Team Leader (97_회로전공,ENTJ)<br> 
+김선들 : Git Branch management (96_컴퓨터전공,INTJ)<br>
+김정현 : 데이터 분석,  모델 성능 개선(01_소프트웨어전공,ISFJ)<br>
+박건수 : 데이터 분석,  모델 성능 개선(96_정보통신공학전공,ISTP)<br></ul>
   
 # prepocess_config .py  
   
-DROP_X_COLS - train data에서 사용하지 않을 컬럼을 지정  
-USE_X_COLS - train data에서 사용할 컬럼을 지정  
-TARGET_COLS - train data의 target 컬럼을 지정  
-  
+DROP_X_COLS - data에서 사용하지 않을 컬럼을 지정(실험용으로 제작 사용하지 않으셔도 됩니다.-> 빈리스트)
+USE_X_COLS - data에서 사용할 컬럼을 지정  
+TARGET_COLS - data의 target 컬럼을 지정  
+EMBEDDING_COLS - 임베딩(벡터화)시킬 컬럼 설정
+
++ SCALER
+  + d 
+
 + config  
     + input_data  
         + train_csv : train data path  
