@@ -115,5 +115,4 @@ ECLO가 18인 경우 9월 외에는 다른 데이터의 분포는 비슷한 것�
 해당 feature는 데이터의 불균형이 심해 오히려 상관관계가 높지 않은 것으로 예측된다.
 
 ---
-<img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=PyTorch&logoColor=white">
-<img src = "https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=PyTorch&logoColor=white"> <img src = "https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
