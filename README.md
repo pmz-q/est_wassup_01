@@ -87,7 +87,7 @@ EMBEDDING_COLS - 임베딩(벡터화)시킬 컬럼 설정
             + 'eta_min': 최저 lr
   
         + loss : 사용할 손실 함수 선택  
-        + optim : 사용할 옵티마이저 선택  
+        + optim : 사용할 옵티마이저 선택 ,[sigmoid, relu, tanh, prelu 중 선택
         + main_metric : pbar에 보일 성능지표
         + metrics  
             'rmse': torchmetrics.MeanSquaredError(squared=False)  
