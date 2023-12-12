@@ -107,6 +107,7 @@ EMBEDDING_COLS - 임베딩(벡터화)시킬 컬럼 설정
             + lr : learning rate 선택  
     + cv_params  
         + n_split : evaluation실행 시 사용할 fold 수 선택
+        + y_scaler_path: evaluation 실행 시 만약 metric 값을 unscale 된 값으로 확인하고 싶을 경우, y scaler 의 path 를 넣어줍니다. 사용 안 할 경우엔 None.
 
 # EDA
 
