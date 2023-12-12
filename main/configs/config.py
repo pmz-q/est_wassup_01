@@ -86,5 +86,7 @@ config = {
     },
     "cv_params": {
         "n_split": 5,
+        "y_scaler_path": "./data/features/y_scaler.save" # 사용 안 할 경우, None 값 넣어주세요.
+        # "y_scaler_path": None
     },
 }
