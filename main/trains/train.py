@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from makers import TrainMaker
 import pandas as pd
+import torch
 from torch import nn, save
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
@@ -8,6 +9,7 @@ from torch.utils.data import DataLoader
 from torchmetrics import MetricCollection
 from typing import Type
 from tqdm.auto import trange
+from sklearn.base import BaseEstimator
 from utils.file_saver import create_path_if_not_exists
 
 
@@ -22,7 +24,8 @@ class Train:
     data_loader: Type[DataLoader],
     device: str,
     metrics:Type[MetricCollection],
-    scheduler:Type[LRScheduler]
+    scheduler:Type[LRScheduler],
+    y_scaler: BaseEstimator = None
   ) -> None:
     '''train one epoch
     '''
@@ -34,6 +37,9 @@ class Train:
       optimizer.zero_grad()
       loss.backward()
       optimizer.step()
+      if y_scaler != None:
+        output = torch.tensor(y_scaler.inverse_transform(pd.DataFrame(output.cpu().detach()))).to(device)
+        y = torch.tensor(y_scaler.inverse_transform(pd.DataFrame(y.cpu().detach()))).to(device)
       metrics.update(output, y)
     if scheduler != None: scheduler.step()
   

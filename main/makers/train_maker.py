@@ -6,6 +6,7 @@ from torchmetrics import MetricCollection
 from torch.utils.data import DataLoader
 from torch.utils.data.dataset import TensorDataset
 from typing import Type
+import joblib
 
 
 class TrainMaker():
@@ -78,11 +79,13 @@ class TrainMaker():
   def scheduler(self): return self.__scheduler
   @property
   def loss_weight(self): return self.__loss_weight
+  @property
+  def y_scaler(self): return None if getattr(self, '__y_scaler_path') == None else joblib.load(getattr(self, '__y_scaler_path'))
   
   def get_train_parameters(self):
     """
     Returns:
-        { model, criterion, optimizer, dataloader, metrics[trn], device, scheduler }
+        { model, criterion, optimizer, dataloader, metrics[trn], device, scheduler, y_scaler }
     """
     return {
       "model": self.model,
@@ -91,5 +94,6 @@ class TrainMaker():
       "data_loader": self.dataloader,
       "metrics": self.metrics['trn'],
       "device": self.device,
-      "scheduler": self.scheduler
+      "scheduler": self.scheduler,
+      "y_scaler": self.y_scaler
     }
