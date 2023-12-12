@@ -6,7 +6,7 @@ import pandas as pd
 from typing import Literal, List
 from sklearn.base import BaseEstimator
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
-from .utils import custom_X_preprocess_cat, merge_features_from_externals
+from .utils import custom_X_preprocess_cat
 
 
 @dataclass(kw_only=True)
