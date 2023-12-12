@@ -5,6 +5,9 @@ from torchmetrics.wrappers import MultioutputWrapper
 from models import ANN
 from loss import MultiTaskMSELoss, RMSLELoss
 
+
+EXPERIMENT_NAME = "experiment_18"
+
 SCHEDULER = {
     "CAWarmRestarts": optim.lr_scheduler.CosineAnnealingWarmRestarts,  # https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CosineAnnealingWarmRestarts.html#torch.optim.lr_scheduler.CosineAnnealingWarmRestarts
     "CALR": optim.lr_scheduler.CosineAnnealingLR,  # https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CosineAnnealingLR.html
@@ -28,8 +31,6 @@ CUSTOM_LOSS = {
     "rmsle": RMSLELoss,
 }
 
-EXPERIMENT_NAME = "experiment_18"
-
 config = {
     "input_files": {
         "X_csv": "./data/features/train_X.csv",
@@ -49,8 +50,8 @@ config = {
         "use_drop": True,
         "drop_ratio": 0.3,
         "activation": "sigmoid",
+        
         # Embedding params
-        # embed_cols_len 은 만약 embedding 을 원치 않을 경우, 0으로 설정해주세요.
         "embed_cols_len": len(EMBEDDING_COLS),  # preprocess_config 에서 설정한 column 갯수
         "embed_dim": EMBEDDING_NODE,  # 늘릴 차원의 수
     },
@@ -63,7 +64,6 @@ config = {
             "T_max": 10,
             "eta_min": 0.0001,
         },
-        # 'loss': RMSLELoss(),
         "loss": torch.nn.MSELoss(),
         # 'loss': CUSTOM_LOSS['multi_task_mse'](weights_per_task=CUSTOM_WEIGHT),
         "loss_weight": CUSTOM_WEIGHT,
