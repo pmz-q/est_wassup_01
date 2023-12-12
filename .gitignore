@@ -1,13 +1,12 @@
 # Custom added
-*.csv
-*.csv.gz
+main/data/origin/*
 *.zip
 *.pth
 *DS_Store
 main/histories/*
+examination/sundeul/externals/*
 test/*
 .vscode/*
-*.save
 *.gpkg
 *.gpkg-*
 
