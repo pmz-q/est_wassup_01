@@ -11,10 +11,10 @@
 # 실험보고서
 |실험내용|실험보고서|발표자료|
 |------|---|---|
-|[대구교통사고실험.xlsx](https://github.com/electronicguy97/est_wassup_01/files/13645556/default.xlsx)|[인공지능 보고서.docx](https://github.com/electronicguy97/est_wassup_01/files/13645944/default.docx)|[발표차료_첫째주.pdf](https://github.com/electronicguy97/est_wassup_01/files/13645586/_.pdf)|
-||[인공지능 보고서.pdf](https://github.com/electronicguy97/est_wassup_01/files/13646036/default.pdf)|[중간발표.pdf](https://github.com/electronicguy97/est_wassup_01/files/13645589/default.pdf)|
-|||[최종발표.pdf](https://github.com/electronicguy97/est_wassup_01/files/13646084/default.pdf)|
-  
+|[대구교통사고실험.xlsx](https://github.com/electronicguy97/est_wassup_01/files/13645556/default.xlsx)|[인공지능 보고서.docx](https://github.com/pmz-q/est_wassup_01/files/13646128/default.docx)|[발표차료_첫째주.pdf](https://github.com/pmz-q/est_wassup_01/files/13646130/_.pdf)|
+||[인공지능 보고서.pdf](https://github.com/pmz-q/est_wassup_01/files/13646127/default.pdf)|[중간발표.pdf](https://github.com/pmz-q/est_wassup_01/files/13646129/default.pdf)|
+|||[최종발표.pdf](https://github.com/pmz-q/est_wassup_01/files/13646125/default.pdf)|
+
 # prepocess_config .py  
   
 DROP_X_COLS - data에서 사용하지 않을 컬럼을 지정(실험용으로 제작 사용하지 않으셔도 됩니다.-> 빈리스트)
