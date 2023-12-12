@@ -13,7 +13,7 @@
 |------|---|---|
 |[대구교통사고실험.xlsx](https://github.com/electronicguy97/est_wassup_01/files/13645556/default.xlsx)|[인공지능 보고서.docx](https://github.com/electronicguy97/est_wassup_01/files/13645944/default.docx)|[발표차료_첫째주.pdf](https://github.com/electronicguy97/est_wassup_01/files/13645586/_.pdf)|
 ||[인공지능 보고서.pdf](https://github.com/electronicguy97/est_wassup_01/files/13646036/default.pdf)|[중간발표.pdf](https://github.com/electronicguy97/est_wassup_01/files/13645589/default.pdf)|
-|||[최종발표.pdf](https://github.com/electronicguy97/est_wassup_01/files/13645591/default.pdf)|
+|||[최종발표.pdf](https://github.com/electronicguy97/est_wassup_01/files/13646084/default.pdf)|
   
 # prepocess_config .py  
   
