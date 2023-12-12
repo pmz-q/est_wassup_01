@@ -1,6 +1,6 @@
 import torch
 from torch import optim
-from torchmetrics import MeanSquaredError, MeanAbsoluteError
+from torchmetrics import MeanSquaredError, MeanAbsoluteError, R2Score
 from torchmetrics.wrappers import MultioutputWrapper
 from models import ANN
 from loss import MultiTaskMSELoss, RMSLELoss
@@ -46,10 +46,10 @@ config = {
     "model": ANN,
     "model_params": {
         "input_dim": "auto",  # Always will be determined by the data shape
-        "hidden_dim": [128,128,64,64],
+        "hidden_dim": [512, 256],
         "use_drop": True,
         "drop_ratio": 0.3,
-        "activation": "sigmoid",
+        "activation": "prelu",
         
         # Embedding params
         "embed_cols_len": len(EMBEDDING_COLS),  # preprocess_config 에서 설정한 column 갯수
@@ -68,10 +68,11 @@ config = {
         # 'loss': CUSTOM_LOSS['multi_task_mse'](weights_per_task=CUSTOM_WEIGHT),
         "loss_weight": CUSTOM_WEIGHT,
         "optim": torch.optim.Adam,
-        "main_metric": "rmse",
+        "main_metric": "r2",
         "metrics": {
             "rmse": MultioutputWrapper(MeanSquaredError(squared=False), NUM_OF_TASKS),
             "mae": MultioutputWrapper(MeanAbsoluteError(), NUM_OF_TASKS),
+            "r2": MultioutputWrapper(R2Score(), NUM_OF_TASKS)
             # 'msle': MultioutputWrapper(MeanSquaredLogError(), NUM_OF_TASKS)
         },
         "device": "cuda:0",

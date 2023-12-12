@@ -17,8 +17,8 @@ USE_X_COLS = ['사고일시', '요일', '기상상태', '시군구', '도로형�
 # 차원을 늘릴 컬럼들을 지정합니다.
 # EMBEDDING_COLS 의 컬럼이 USE_X_COLS 에 들어있는지 반드시 확인해주세요.
 # 만약, 차원을 늘릴 컬럼이 eda 과정에서 컬럼명이 바뀐다면 바뀌는 컬럼명을 입력해주세요.
-# EMBEDDING_COLS = ['동']
-EMBEDDING_COLS = []
+EMBEDDING_COLS = ['동']
+# EMBEDDING_COLS = []
 
 # 선택 가능한 Scaler 입니다.
 SCALER = {
@@ -44,24 +44,24 @@ config = {
     # 추가할 외부 데이터들의 경로를 지정합니다.
     "add_data": {
         "add_csv_list": [
-            # "./data/origin/additionals/bad_cars.csv",  # 0
-            # "./data/origin/additionals/bad_pedestrian.csv",  # 1
-            # "./data/origin/additionals/car_per_area_size_dong.csv",  # 2
-            # "./data/origin/additionals/car_speed.csv",  # 3
-            # "./data/origin/additionals/car_traffic.csv",  # 4
-            # "./data/origin/additionals/frozen_road.csv",  # 5
-            # "./data/origin/additionals/moving_pop_by_age.csv",  # 6
-            # "./data/origin/additionals/moving_pop_by_days.csv",  # 7
-            # "./data/origin/additionals/moving_pop_by_time.csv",  # 8
-            # "./data/origin/additionals/old_pedestrian.csv",  # 9
-            # "./data/origin/additionals/pedestrian.csv",  # 10
-            # "./data/origin/additionals/population_mildo_gu_basis.csv",  # 12
-            # "./data/origin/additionals/rain_mm_monthly.csv",  # 13
-            # "./data/origin/additionals/road_long_by_dong.csv",  # 14
-            # "./data/origin/additionals/snow_mean_days_monthly.csv",  # 15
-            # "./data/origin/additionals/sun_records_monthly_mean.csv",  # 16
-            # "./data/origin/additionals/truck.csv",  # 17
-            # "./data/origin/additionals/weather_overall_monthly.csv",  # 18
+            "./data/origin/additionals/bad_cars.csv",  # 0
+            "./data/origin/additionals/bad_pedestrian.csv",  # 1
+            "./data/origin/additionals/car_per_area_size_dong.csv",  # 2
+            "./data/origin/additionals/car_speed.csv",  # 3
+            "./data/origin/additionals/car_traffic.csv",  # 4
+            "./data/origin/additionals/frozen_road.csv",  # 5
+            "./data/origin/additionals/moving_pop_by_age.csv",  # 6
+            "./data/origin/additionals/moving_pop_by_days.csv",  # 7
+            "./data/origin/additionals/moving_pop_by_time.csv",  # 8
+            "./data/origin/additionals/old_pedestrian.csv",  # 9
+            "./data/origin/additionals/pedestrian.csv",  # 10
+            "./data/origin/additionals/population_mildo_gu_basis.csv",  # 12
+            "./data/origin/additionals/rain_mm_monthly.csv",  # 13
+            "./data/origin/additionals/road_long_by_dong.csv",  # 14
+            "./data/origin/additionals/snow_mean_days_monthly.csv",  # 15
+            "./data/origin/additionals/sun_records_monthly_mean.csv",  # 16
+            "./data/origin/additionals/truck.csv",  # 17
+            "./data/origin/additionals/weather_overall_monthly.csv",  # 18
         ],
     },
     "options": {
