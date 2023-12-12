@@ -37,24 +37,24 @@ config = {
     },
     "add_data": {
         "add_csv_list": [
-            # "./data/origin/additionals/bad_cars.csv",  # 0
-            # "./data/origin/additionals/bad_pedestrian.csv",  # 1
-            # "./data/origin/additionals/car_per_area_size_dong.csv",  # 2
-            # "./data/origin/additionals/car_speed.csv",  # 3
-            # "./data/origin/additionals/car_traffic.csv",  # 4
-            # "./data/origin/additionals/frozen_road.csv",  # 5
-            # "./data/origin/additionals/moving_pop_by_age.csv",  # 6
-            # "./data/origin/additionals/moving_pop_by_days.csv",  # 7
-            # "./data/origin/additionals/moving_pop_by_time.csv",  # 8
-            # "./data/origin/additionals/old_pedestrian.csv",  # 9
-            # "./data/origin/additionals/pedestrian.csv",  # 10
-            # "./data/origin/additionals/population_mildo_gu_basis.csv",  # 12
-            # "./data/origin/additionals/rain_mm_monthly.csv",  # 13
-            # "./data/origin/additionals/road_long_by_dong.csv",  # 14
-            # "./data/origin/additionals/snow_mean_days_monthly.csv",  # 15
-            # "./data/origin/additionals/sun_records_monthly_mean.csv",  # 16
-            # "./data/origin/additionals/truck.csv",  # 17
-            # "./data/origin/additionals/weather_overall_monthly.csv",  # 18
+            "./data/origin/additionals/bad_cars.csv",  # 0
+            "./data/origin/additionals/bad_pedestrian.csv",  # 1
+            "./data/origin/additionals/car_per_area_size_dong.csv",  # 2
+            "./data/origin/additionals/car_speed.csv",  # 3
+            "./data/origin/additionals/car_traffic.csv",  # 4
+            "./data/origin/additionals/frozen_road.csv",  # 5
+            "./data/origin/additionals/moving_pop_by_age.csv",  # 6
+            "./data/origin/additionals/moving_pop_by_days.csv",  # 7
+            "./data/origin/additionals/moving_pop_by_time.csv",  # 8
+            "./data/origin/additionals/old_pedestrian.csv",  # 9
+            "./data/origin/additionals/pedestrian.csv",  # 10
+            "./data/origin/additionals/population_mildo_gu_basis.csv",  # 12
+            "./data/origin/additionals/rain_mm_monthly.csv",  # 13
+            "./data/origin/additionals/road_long_by_dong.csv",  # 14
+            "./data/origin/additionals/snow_mean_days_monthly.csv",  # 15
+            "./data/origin/additionals/sun_records_monthly_mean.csv",  # 16
+            "./data/origin/additionals/truck.csv",  # 17
+            "./data/origin/additionals/weather_overall_monthly.csv",  # 18
         ],
     },
     "options": {
