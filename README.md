@@ -43,8 +43,8 @@ EMBEDDING_COLS - 임베딩(벡터화)시킬 컬럼 설정
       + drop_cols : 제외 할 피쳐  
       + use_cols : 사용 할 피쳐  
       + fill_num_strategy : null 값이 있는 부분을 채울 방법을 min, mean, max 중에서 선택  
-      + x_scaler : SCALER['minmax']() put None for no X scaling process  
-      + y_scaler : SCALER['minmax']() put None for no y scaling process  
+      + x_scaler : SCALER\['minmax']() put None for no X scaling process  
+      + y_scaler : SCALER\['minmax']() put None for no y scaling process  
 
 # config.py  
 
@@ -57,7 +57,7 @@ EMBEDDING_COLS - 임베딩(벡터화)시킬 컬럼 설정
         + [참조링크](https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.LambdaLR.html)  
 + EMBEDDING_COLS = [임베딩 시킬 피쳐]
 + EMBEDDING_NODE = 늘릴 차원 수
-+ CUSTOM_WEIGHT = 가중치 원하는 크기 ex)[10,5,3,1] 사망자~부상자 가중치
++ CUSTOM_WEIGHT = 가중치 원하는 크기 ex)\[10,5,3,1] 사망자~부상자 가중치
 + NUM+OF_TASKS = 가중치 총길이
 
 + EXPERIMENT_NAME = output_files의 경로 중간의 삽입되는 이름  
@@ -88,7 +88,7 @@ EMBEDDING_COLS - 임베딩(벡터화)시킬 컬럼 설정
   
     + train_params  - 스케줄러 관한 설정  
         + use_scheduler: 스케줄러 사용 유/무 설정, True - 사용, False - 사용 안 함  
-        + scheduler_cls: SCHEDULER['CALR']  
+        + scheduler_cls: SCHEDULER\['CALR']  
         + scheduler_params  
             + 'T_max': cos 반복 주기  
             + 'eta_min': 최저 lr
