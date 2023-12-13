@@ -9,11 +9,11 @@
 박건수 : 데이터 분석,  모델 성능 개선(96_정보통신공학전공,ISTP)<br></ul>
 
 # 실험보고서
-|실험내용|실험보고서|발표자료|
-|------|---|---|
-|[대구교통사고실험.xlsx](https://github.com/electronicguy97/est_wassup_01/files/13645556/default.xlsx)|[인공지능 보고서.docx](https://github.com/pmz-q/est_wassup_01/files/13646128/default.docx)|[발표차료_첫째주.pdf](https://github.com/pmz-q/est_wassup_01/files/13646130/_.pdf)|
-||[인공지능 보고서.pdf](https://github.com/pmz-q/est_wassup_01/files/13646127/default.pdf)|[중간발표.pdf](https://github.com/pmz-q/est_wassup_01/files/13646129/default.pdf)|
-|||[최종발표.pdf](https://github.com/pmz-q/est_wassup_01/files/13646125/default.pdf)|
+|실험내용|실험보고서|발표자료|안내서|
+|------|---|---|---|
+|[대구교통사고실험.xlsx](https://github.com/electronicguy97/est_wassup_01/files/13645556/default.xlsx)|[인공지능 보고서.docx](https://github.com/pmz-q/est_wassup_01/files/13646128/default.docx)|[발표차료_첫째주.pdf](https://github.com/pmz-q/est_wassup_01/files/13646130/_.pdf)|[guide-note.pdf](https://github.com/pmz-q/est_wassup_01/files/13657758/guide-note.pdf)|
+||[인공지능 보고서.pdf](https://github.com/pmz-q/est_wassup_01/files/13646127/default.pdf)|[중간발표.pdf](https://github.com/pmz-q/est_wassup_01/files/13646129/default.pdf)||
+|||[최종발표.pdf](https://github.com/pmz-q/est_wassup_01/files/13646125/default.pdf)||
 
 # prepocess_config .py  
   
